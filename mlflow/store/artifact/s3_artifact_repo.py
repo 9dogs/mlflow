@@ -26,7 +26,8 @@ class S3ArtifactRepository(ArtifactRepository):
     def _get_s3_client(self):
         import boto3
         s3_endpoint_url = os.environ.get('MLFLOW_S3_ENDPOINT_URL')
-        return boto3.client('s3', endpoint_url=s3_endpoint_url)
+        s3_region_name = os.environ.get('MLFLOW_S3_REGION_NAME')
+        return boto3.client('s3', endpoint_url=s3_endpoint_url, region_name=s3_region_name)
 
     def log_artifact(self, local_file, artifact_path=None):
         (bucket, dest_path) = data.parse_s3_uri(self.artifact_uri)
